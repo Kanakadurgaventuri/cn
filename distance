@@ -1,0 +1,36 @@
+#include <stdio.h> 
+#define V 10 
+#define INF 999 
+int main() { 
+    int n, i, j, k, G[V][V], d[V][V]; 
+    printf("\n=== DISTANCE VECTOR ROUTING ===\n"); 
+    printf("Enter routers: ");
+    scanf("%d", &n);
+    printf("Enter cost matrix (%d=no link):\n", INF); 
+    for (i = 0; i < n; i++) 
+        for (j = 0; j < n; j++) 
+            scanf("%d", &G[i][j]); 
+    for (i = 0; i < n; i++) 
+        for (j = 0; j < n; j++) 
+            d[i][j] = G[i][j]; 
+    for (k = 0; k < n; k++) 
+        for (i = 0; i < n; i++) 
+            for (j = 0; j < n; j++) 
+                if (d[i][k] + d[k][j] < d[i][j]) 
+                    d[i][j] = d[i][k] + d[k][j]; 
+    for (i = 0; i < n; i++) { 
+        printf("\nRouter %c:\nDest Cost Next\n", 'A' + i); 
+        for (j = 0; j < n; j++) { 
+            if (i == j) continue;
+            int nxt = i;
+            for (k = 0; k < n; k++) { 
+                if (d[i][j] == d[i][k] + d[k][j] && i != k) { 
+                    nxt = k; 
+                    break; 
+                } 
+            } 
+            printf("%c\t%d\t%c\n", 'A' + j, d[i][j], 'A' + nxt); 
+        } 
+    } 
+    return 0; 
+}
