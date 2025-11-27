@@ -1,0 +1,28 @@
+#include <stdio.h>
+int main() {
+    int b, r, m, n, s = 0, d;
+    printf("Bucket size: ");
+    scanf("%d", &b);
+    printf("Output rate: ");
+    scanf("%d", &r);
+    printf("No. of packets: ");
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        printf("\nPacket %d size: ", i);
+        scanf("%d", &m);
+        if (m > b - s) {
+            d = m - (b - s);
+            s = b;
+            printf("Dropped = %d\n", d);
+        } else {
+            s += m;
+        }
+        printf("Before leak = %d\n", s);
+        if (s > r) {
+            s = s - r;
+        } else {
+            s = 0;
+        }
+        printf("After leak = %d\n", s);
+    }
+}
