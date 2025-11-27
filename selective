@@ -1,0 +1,28 @@
+#include <stdio.h>
+int main() {
+    int t, w, s = 0, i;
+    printf("Total frames: ");
+    scanf("%d", &t);
+    printf("Window size: ");
+    scanf("%d", &w);
+    int ack[t];
+    for (i = 0; i < t; i++)
+        ack[i] = 0;
+    printf("\nSelective Repeat Protocol\n");
+    while (s < t) {
+        printf("\nSending: ");
+        for (i = s; i < s + w && i < t; i++)
+            if (!ack[i])
+                printf("%d ", i);
+        for (i = s; i < s + w && i < t; i++) {
+            if (!ack[i]) {
+                printf("\nAck %d? (1=yes, 0=no): ", i);
+                scanf("%d", &ack[i]);
+            }
+        }
+        while (s < t && ack[s])
+            s++;
+    }
+    printf("\nAll frames sent!\n");
+    return 0;
+}
